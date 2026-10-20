@@ -1,0 +1,15 @@
+
+{
+  "name": "silentlybeyond-ai-driver",
+  "owner": {
+    "name": "silentlybeyond"
+  },
+  "description": "AI Driver plugin distribution by silentlybeyond.",
+  "plugins": [
+    {
+      "name": "ai-driver",
+      "source": "./plugins/ai-driver",
+      "description": "Keep multi-step work moving toward a goal: plan, delegate within available permissions, check evidence, and resume unfinished tasks."
+    }
+  ]
+}
