@@ -11,7 +11,11 @@ AI Driverは、利用者が定めた目的・成功条件・決定事項・権�
 | Claude Code（ターミナル / VS Code） | 以下のMarketplace経由 | rc.3のMarketplace・Plugin定義に対するClaude Code公式検証2/2 PASS。GitHubインストール済みrc.3のSkillと参照資料の読込も利用者報告で確認済み。更新候補rc.4は公式検証前 |
 | **ClaudeのWebチャット（Freeを含む）** | **専用Skill ZIPをアップロード** | Anthropic公式がFreeのカスタムSkillに対応。**旧Web版のFreeでのアップロード・判断テストと、別名Adapterテスト版でのDoc保存・別チャット直接読込・タイトル検索は利用者報告に基づき限定PASS。今回のv0.3配布ZIPは未検証** |
 | GitHub Copilot / Gemini CLI | 将来の対応候補 | 未検証 |
-| ChatGPT / Codex | OpenAIのPlugin Directoryで別途配布 | このClaude版ZIPでは直接インストールしない |
+| ChatGPT / Codex | [ChatGPT版ソース・非公開導入用ZIP](chatgpt/ai-driver/README.md)。Codexは個別検証が必要 | ChatGPTのPRIVATEプラグイン作成は1アカウントで成功。Skill単独ZIPの導入、自動選択、Codexは未検証。OpenAI公式Directory掲載ではありません。 |
+
+## ChatGPT版の非公開導入
+
+ChatGPT専用の[ソースと案内](chatgpt/ai-driver/README.md)・[日本語導入ガイド](chatgpt/ai-driver/INSTALL.ja.md)を追加しました。対象アカウントで利用できる場合は、[非公開プラグイン用ZIP](dist/ai-driver-chatgpt-plugin-v0.1.12-poc13.zip)または[個人用Skill ZIP](dist/ai-driver-chatgpt-skill-v0.1.12-poc13.zip)を利用してください。**リポジトリ全体のZIPをインストール用として使わないでください。** GitHub公開はOpenAI公式Plugin Directoryへの掲載ではなく、アカウントによって導入機能が異なります。検証済み／未検証の範囲はガイドをご覧ください。
 
 ## 1. Claude Codeでのインストール
 

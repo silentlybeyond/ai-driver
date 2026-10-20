@@ -1,0 +1,19 @@
+{
+  "author": {
+    "name": "silentlybeyond"
+  },
+  "description": "Use AI Driver when you want AI to plan, delegate, check results and keep multi-step work moving toward your goal.",
+  "interface": {
+    "capabilities": [],
+    "category": "Other",
+    "defaultPrompt": null,
+    "developerName": "silentlybeyond",
+    "displayName": "ai-driver-chatgpt-library",
+    "longDescription": "**Tired of correcting the same AI mistakes?**\n\nYou explain your goal, correct an error, and add another instruction. Yet the same problems return, prompts grow harder to manage, and AI loses sight of what you originally wanted to achieve.\n\n**AI Driver helps you break that cycle\u2014so you spend less time managing AI and more time getting things done.**\n\nStart with two things:\n- **Your goal:** What do you want to achieve?\n- **Your definition of done:** How will you know it's finished?\n\nAI Driver helps you:\n- **Stay on track:** Preserve goals, decisions, and constraints across tasks.\n- **Keep moving:** Identify what needs to happen next without constant direction.\n- **Get work done:** Execute tasks with available tools or prepare instructions for other AI tools.\n- **Check results:** Review outcomes against your goals and completion criteria.\n- **Resume work:** Pick up unfinished tasks using accessible saved context.\n\nAI Driver works within available tools and permissions, keeping important decisions in your hands. It doesn't promise perfect memory or error-free results.",
+    "shortDescription": "Keep multi-step AI work on track\u2014plan, delegate, verify and continue."
+  },
+  "keywords": [],
+  "name": "ai-driver-chatgpt-library",
+  "skills": "./skills",
+  "version": "0.1.12-poc13"
+}

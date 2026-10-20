@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "author": {
+    "name": "silentlybeyond"
+  },
+  "description": "Use AI Driver when you want AI to plan, delegate, check results and keep multi-step work moving toward your goal.",
+  "name": "ai-driver-chatgpt-library",
+  "version": "0.1.12-poc13"
+}

@@ -11,9 +11,13 @@ AI Driver is an Agent Skill for pursuing a user-defined goal and success criteri
 | Claude Code (terminal/VS Code) | Install the GitHub marketplace plugin below | Official marketplace and plugin manifest validators 2/2 PASS on rc.3 (user-provided Windows CLI output); GitHub-installed rc.3 Skill and bundled references were read successfully (user-reported Claude Code run). Updated rc.4 has not yet been independently host-validated. |
 | Claude web chat, including Free | Upload the standalone Skill ZIP below | Anthropic documents custom Skill upload on Free; **Free custom Skill upload and read-only decision behavior passed in one user-reported account. A separate adapter-test Skill qualified Claude Doc creation, same-chat readback, direct-ID cross-chat retrieval and title-only Artifacts-list retrieval; the bundled v0.3 adapter package itself is not host-qualified.** |
 | GitHub Copilot / Gemini CLI | Planned integrations | **Not yet qualified** |
-| ChatGPT / Codex | Separate OpenAI Plugin Directory distribution | Not installed from this GitHub Claude plugin by default |
+| ChatGPT / Codex | [ChatGPT source and private-install ZIPs](chatgpt/ai-driver/README.md); Codex not independently qualified | PRIVATE plugin creation succeeded in one account; Skill ZIP upload, automatic activation and Codex remain unverified. Not an official OpenAI directory listing. |
 
 Neither a validated manifest nor a ZIP alone proves consistent live behavior, universal storage access, automated invocation, security certification or marketplace endorsement.
+
+## ChatGPT private self-install
+
+AI Driver's ChatGPT edition is now available as [auditable source](chatgpt/ai-driver/README.md) with [Japanese installation instructions](chatgpt/ai-driver/INSTALL.ja.md), plus separate [private-plugin ZIP](dist/ai-driver-chatgpt-plugin-v0.1.12-poc13.zip) and [personal-Skill ZIP](dist/ai-driver-chatgpt-skill-v0.1.12-poc13.zip). Use the dedicated ZIP, not the whole repository ZIP. These are **self-install packages where the account has the required permissions**; GitHub publication is not an OpenAI Plugin Directory listing. See the guides for qualified and unverified behavior.
 
 ## Install in Claude Code (terminal or IDE)
 
