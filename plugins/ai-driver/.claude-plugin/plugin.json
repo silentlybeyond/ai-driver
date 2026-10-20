@@ -1,10 +1,16 @@
 {
   "name": "ai-driver",
+  "displayName": "AI Driver",
   "description": "Keep multi-step work moving toward a goal: plan, delegate within available permissions, check evidence, and resume unfinished tasks.",
   "version": "0.1.13-rc.4",
   "author": {
     "name": "silentlybeyond"
   },
+  "homepage": "https://github.com/silentlybeyond/ai-driver",
+  "repository": "https://github.com/silentlybeyond/ai-driver",
+  "supportUrl": "https://github.com/silentlybeyond/ai-driver/issues",
+  "privacyPolicyUrl": "https://silentlybeyond.github.io/ai-driver-privacy/",
+  "documentationUrl": "https://github.com/silentlybeyond/ai-driver/blob/main/README.md",
   "license": "MIT",
   "keywords": [
     "productivity",
