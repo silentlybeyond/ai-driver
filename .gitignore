@@ -1,0 +1,17 @@
+
+# Keep local/private state, credentials and build output out of the public repository
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+__pycache__/
+.DS_Store
+Thumbs.db
+CURRENT*.md
+*-handoff-private.md
+.evidence/
+evidence/
+artifacts/
