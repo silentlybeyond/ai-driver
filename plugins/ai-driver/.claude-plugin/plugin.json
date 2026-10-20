@@ -1,0 +1,17 @@
+
+{
+  "name": "ai-driver",
+  "description": "Keep multi-step work moving toward a goal: plan, delegate within available permissions, check evidence, and resume unfinished tasks.",
+  "version": "0.1.13-rc.3",
+  "author": {
+    "name": "silentlybeyond"
+  },
+  "license": "MIT",
+  "keywords": [
+    "productivity",
+    "planning",
+    "project-management",
+    "ai-assistant",
+    "workflow"
+  ]
+}
