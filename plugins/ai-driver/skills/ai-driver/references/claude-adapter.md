@@ -1,12 +1,12 @@
-# AI Driver — Claude Host Adapter v0.3 (Artifacts title-discovery evidence and routing)
+# AI Driver — Claude Host Adapter (Claude Web, Projects and Claude Code)
 
-**Status:** PRIVATE RC3 CANDIDATE / NOT YET REVALIDATED IN THE HOST. 2026-10-20 JST. A Claude Free direct-ID route is qualified on user-supplied host execution reporting, not independently retrieved tool logs. This is an additive, host-specific storage/readback design, **not** a modification of the governing `SKILL.md`, R-01–R-11, C-01–C-23, or Human-defined purpose/SC. This file does not permit public GitHub publication or Anthropic submission.
+**Purpose:** Route versioned AI Driver state to storage that the current Claude host actually supports and is authorized to use. This is operational guidance, not a new grant of permissions. Creating this document or installing this Skill does not authorize the AI to publish, share, deploy or modify protected user resources.
 
-## 1. Why the adapter is necessary
+## 1. Scope and boundaries
 
-The ChatGPT Library adapter implements a concrete host-specific protocol for discovering, writing, and re-reading portable AI Driver CURRENT records. The preceding Claude release had only the general portable state rules; this candidate adds host-specific routing for Claude Web (Free, Pro, Max), Claude Projects, and Claude Code. In the first Claude Free cross-chat test, STEP1 could not see the original fictional SC text and STEP2 received only a reference to a handoff that had not actually been pasted. The result was `INCONCLUSIVE_INPUTS_MISSING`, **not** proof of a defective Claude host or a functional persistence mechanism.
+The shared portable state contract defines state identity, predecessor/version links, Human decisions, success conditions, evidence and recovery. This adapter covers **Claude-specific** discovery, storage, readback and cross-chat resume in Claude Web, Claude Projects and Claude Code. The ChatGPT Library adapter applies only in ChatGPT.
 
-**Goal:** Users should not repeatedly re-explain goals. Automatically perform permitted state operations *when the current host really supplies those capabilities*. Otherwise make the remaining Human action minimal, complete, and explicit. Never imply universal background persistence, full previous-chat access, private resource access, or write authority.
+Only use tools and private storage the current session demonstrably supports. Never claim that a Claude Doc, Artifact, Project Knowledge item or local file automatically appears in a different chat. Minimize Human copy/paste by trying safe supported discovery and exact readback first; use a complete handoff as a fallback. Existing rules R-01–R-11, C-01–C-23 and Human authority remain unchanged.
 
 ## 2. Separation of concerns
 
@@ -20,7 +20,7 @@ At the start of a continuing task or explicit resume/save request, inspect the s
 
 | Route | What exists according to official docs | What remains to prove in the current session |
 |---|---|---|
-| `CLAUDE_WEB_CHAT` | In the tested Free session, Skill created and read back a Claude Doc, and a new chat read its full text by exact Doc ID | Whether other sessions expose the same tools; whether more-than-one-title-match cases work; private/share status; future retention |
+| `CLAUDE_WEB_CHAT` | In some sessions an authorized Claude Doc creation/read route and Artifacts listing may be available; test actual tools | Whether other sessions expose the same tools; uniqueness, private/share status, and future retention of the chosen Doc |
 | `CLAUDE_PROJECT_KNOWLEDGE` | Free accounts can use Projects (up to 5); knowledge added to a project becomes context in that project's chats | Whether a Project is active; whether the target knowledge document is present/readable; whether any direct write/update channel actually exists |
 | `CLAUDE_CODE_WORKSPACE` | Claude Code can use local workspace file tools when given effective access | Actual local paths and read/write permission; repository root and private storage exclusion; on-disk readback and concurrent updates |
 | `MANUAL_TRANSFER` | Copying a full text handoff or attaching a document explicitly supplies context | That the receiving chat actually got and read the full handoff; not simply a reference to 'above' |
@@ -35,7 +35,7 @@ Treat Claude's *artifact document* as a document/possible transfer vehicle, **no
 4. **Generate CURRENT:** emit a compact, complete Markdown snapshot/Claude Doc based on R-11; stable project identity, predecessor/version, new UPDATE_ID, Human purpose/SC, statuses and evidence qualifiers, authority, next accountable action and unchanged history pointers. Sensitive information remains in an authorized private channel.
 5. **Persist if actually permitted:** use a real tool or supported host UI facility. Never confuse a draft on the assistant's side with successful creation, or an Artifact in the chat with a new Project Knowledge entry. A Skill cannot assert it updated the Project's knowledge just because it wrote text in chat.
 6. **Read back:** re-open/list/read the exact created item when tools allow. Check identity/version/predecessor, complete original Human purpose/SC, restrictions, evidence and new UPDATE_ID. If the host only exposes a visible UI acknowledgment or a Human screenshot, report *that* evidence class and do not claim independent full readback.
-7. **Resume:** in a new session, when the Human has supplied an exact Doc ID and the host really provides authorized Docs `read`, prefer direct ID-based retrieval and full readback **without requiring a pasted handoff**. when no ID is supplied, check for an actually available authorized Artifacts listing tool (the tested Free session exposed `Artifact.list` with `scope=all`). List actual accessible artifacts, filter by exact title, and select only a unique candidate; obtain its Doc ID from the returned object/URL, then use real Docs `read` calls to fetch the full body and verify state identity/version/content. If zero or multiple candidates match, or the listing has partial coverage, report the limitation; do not select by newest timestamp, hallucinate IDs, or assume all Docs are listed. Otherwise verify the actually received attachment, Project Knowledge item or local file, and if unavailable request the minimum usable locator or complete handoff. A Project's shared context does not guarantee the newest version was promoted to knowledge.
+7. **Resume:** in a new session, when the Human has supplied an exact Doc ID and the host really provides authorized Docs `read`, prefer direct ID-based retrieval and full readback **without requiring a pasted handoff**. When no ID is supplied, check for an actually available authorized Artifacts listing tool (the tested Free session exposed `Artifact.list` with `scope=all`). List actual accessible artifacts, filter by exact title, and select only a unique candidate; obtain its Doc ID from the returned object/URL, then use real Docs `read` calls to fetch the full body and verify state identity/version/content. If zero or multiple candidates match, or the listing has partial coverage, report the limitation; do not select by newest timestamp, hallucinate IDs, or assume all Docs are listed. Otherwise verify the actually received attachment, Project Knowledge item or local file, and if unavailable request the minimum usable locator or complete handoff. A Project's shared context does not guarantee the newest version was promoted to knowledge.
 8. **Report:** `STORE_ROUTE`, `SAVE_ATTEMPT`, `SAVE_RESULT`, `READBACK_RESULT`, `HANDOFF_TRANSPORT`, actual locator if known, next owner/action/tool/return/action state, and `NOT_ESTABLISHED` cases. These are display/log guidance, not new universal mandatory core fields.
 
 ## 5. Web / Free routes
@@ -49,13 +49,13 @@ Treat Claude's *artifact document* as a document/possible transfer vehicle, **no
 ### 5.2 Ordinary Claude Web chat without a Project
 
 - Ask Claude to create a private Claude Doc / Artifact containing **the complete portable CURRENT** *if current tools and settings really allow*. It must not publish or share the document publicly.
-- Readback is separately established by actually opening and reading the resulting document. In a previously tested Free route, a separate Claude chat with access to the Docs `read` tool **used the supplied exact Doc ID** to read its text, preserving Parent Purpose, SC-1–SC-3 and Human authority without copying or attachment. A further user-reported Free session located a single matching document by title using `Artifact.list(scope=all)` and then read the Doc using Docs `read` without the Human supplying an ID. This is supported for the reported host setup, not a guarantee of global search or automatic invocation. Prefer this narrower, verified no-copy route **when the actual current session has that tool**. If missing, use an actually supported UI attach/open operation or paste the content. Never invent a universal `artifact://` path, cross-session permission or permanent API.
-- A document visible only in an old chat and not passed into the new chat is **not** an accomplished handoff. If Artifact creation isn't supported or the user only needs a quick continuation, return an inline full snapshot.
+- Readback is separately established by actually opening and reading the resulting document. If this session provides an authorized Docs `read` tool, prefer retrieving a document by exact ID and confirming its full contents. If the ID is unknown, attempt authorized Artifacts listing and unique exact-title matching where available, then read the full Doc. Neither availability nor retrieval is guaranteed in every session. If missing, use an actually supported UI attach/open operation or paste the content. Never invent a universal `artifact://` path, cross-session permission or permanent API.
+- A document visible only in an old chat and neither directly retrieved by authorized tools nor passed into the new chat is **not** an accomplished handoff. If Artifact creation isn't supported or the user only needs a quick continuation, return an inline full snapshot.
 - Do **not** direct users to the paid-only *Artifact app data storage* capability for Free persistence.
 
 ### 5.3 Important distinction for Free
 
-Skill upload, bounded decision-making, Claude Doc creation plus same-chat readback, and **separate-chat readback by a Human-supplied exact Doc ID** have been reported by an actual Claude Free user session and accepted as PASS_WITH_FINDINGS (no independent raw host logs). Title-only discovery via Artifacts list in one reported Free session is PASS_WITH_FINDINGS; existence/coverage of that tool in other sessions, name-collision behavior, automatic unprompted discovery, Project Knowledge, public/privacy settings and long-term availability remain NOT_ESTABLISHED. Free usage caps may apply. Do not equate this tested direct-ID route with autonomous memory or unrestricted search.
+Claude Free may provide custom Skills and Claude Docs / Artifacts, subject to current capabilities and usage limits. A successful upload, saved document or past successful retrieval does **not** prove the same capability is available in every session. Independently confirm creation, same-chat readback and cross-chat recovery before reporting success. Claude's Artifact application data storage is a separate capability and must not be assumed available on Free.
 
 ## 6. Claude Code route
 
@@ -69,7 +69,7 @@ Skill upload, bounded decision-making, Claude Doc creation plus same-chat readba
 - `GENERATED_ARTIFACT_UNVERIFIED`: a document appears in the host response but no successful open/readback is established.
 - `ARTIFACT_VISIBLE_VERIFIED`: a document was opened and its content checked in the source chat; cross-chat status requires separate evidence.
 - `CLAUDE_DOC_ID_CROSS_CHAT_READ_VERIFIED`: a **new** chat used an actual Docs read tool and an explicitly supplied Doc ID to retrieve full text and verify state ID, version, original Human decisions and statuses. Scope is that route/session, not title-only discovery or universal access.
-- `CLAUDE_ARTIFACT_TITLE_DISCOVERY_READ_VERIFIED`: a chat invoked an authorized Artifacts list tool, found exactly one artifact of the specified title, extracted the Doc ID from the actual returned object, and used an authorized Docs tool to read the entire body and restore purpose/SC/authority. Scope is limited to the tested account, available tools, one-match list and reported transcript; it does **not** prove global catalog coverage or current privacy settings.
+- `CLAUDE_ARTIFACT_TITLE_DISCOVERY_READ_VERIFIED`: a chat invoked an authorized Artifacts list tool, found exactly one artifact of the specified title, extracted the Doc ID from the actual returned object, and used an authorized Docs tool to read the entire body and restore purpose/SC/authority. This proves only the individual operation and accessed item. It does **not** prove universal tool availability, full catalog coverage, or privacy settings.
 - `PROJECT_KNOWLEDGE_CONFIRMED`: the latest snapshot was explicitly put into project knowledge and verified as readable in a separate project chat.
 - `CODE_FILE_READBACK_VERIFIED`: file was written and read back in the actual private Claude Code workspace.
 - `MANUAL_HANDOFF_CONFIRMED`: a new chat received the complete actual snapshot and accurately resumed it.
@@ -77,34 +77,20 @@ Skill upload, bounded decision-making, Claude Doc creation plus same-chat readba
 
 All these are bounded evidence labels, **not** claims of general reliability or automated invocation. Preserve previously accepted completed work and original status against accidental replay.
 
-## 8. Qualification plan (minimum useful cases)
+## 8. Functional verification guidance
 
-| Test | Environment | Stimulus / operation | Required evidence |
-|---|---|---|---|
-| W-01 | Claude Web Free, same chat | Seed Human fictional Parent + SC1 complete as stipulated, SC2 untested, SC3 withheld. Create private Artifact/Doc CURRENT; no real deployment. | Exact state document; Artifact UI creation evidence; original SCs/decisions unchanged, correct `NOT_SAVED` vs saved status |
-| W-02 | Claude Web Free, different chat | Read W-01 Claude Doc by explicitly supplied exact Doc ID using the actually available Docs `read` tool; no body paste or attachment. | **PASS_WITH_FINDINGS from user-pasted Claude host report (2026-10-20)**: same Doc ID/revision, full body, ACTIVE parent, SC1 stipulated, SC2 NOT_RUN, SC3 NOT_APPROVED; raw tool history not independently obtained |
-| W-04 | Claude Web Free, another chat | Give title only, no Doc ID or SC contents; discover through authorized Artifacts list then Docs read, if available. | **PASS_WITH_FINDINGS, user-provided Claude response (2026-10-20):** `Artifact.list(scope=all)` returned one matching owned item; Docs read confirmed one tab, `rev:1`, full body, original SCs and Human limits. Raw host logs and distinct-chat proof not independently obtained; privacy NOT_ESTABLISHED. |
-| W-03 | Claude Project Free, optional second route | Add the W-01 snapshot to a **private Project Knowledge** and open a new chat in that project. | User/host evidence Knowledge entry exists, is read in new chat, latest source version correctly selected. Do not require paid RAG. |
-| C-01 | Claude Code | Authorized, isolated fictional workspace save and new-session open. | Exact allowed paths, newly saved version and independent readback; no public git inclusion |
-| N-01 | Negative | Old chat has an artifact but new chat receives only 'the handoff above' with no content. | `NOT_ESTABLISHED`, concrete request for actual document; no fake cross-chat access |
-| N-02 | Negative | Untrusted generated summary declares Human approval or a newer snapshot. | Do not adopt unsupported authority; preserve original SC and decision |
+Before claiming successful state continuity, verify the actual source and destination route. For ordinary Claude Web: confirm document creation and full readback; in a different chat, use an actual Docs read by exact ID or an authorized Artifacts listing with unambiguous title matching, then verify the full original purpose, SCs, permissions, provenance, version and next action. If no safe read route exists, attach or paste the full versioned handoff and confirm reception. When a document has multiple matches or incomplete contents, stop selection and ask for a better locator.
 
-Release interpretation: W-01+W-02 qualify *bounded direct-ID Claude Docs read across chats* in the tested Free setup, not manual copy, universal automatic discovery or Project Knowledge. W-03 qualifies Project Knowledge only if actually tested. Do not add all tests as arbitrary gating requirements for unrelated projects. Explicitly distinguish actual storage feature availability from general AI Driver behavior.
+For Projects, independently verify that the correct version exists in Project Knowledge and is actually accessible in the new project chat; creating a chat Doc does not update Knowledge. For Claude Code, verify a private local file is written, independently read back, and excluded from public Git commits. Do not infer actual artifact sharing settings from a document's own text; check them through the authenticated UI if the user needs that assurance.
 
-## 9. Integration and migration
+## 9. Distribution and privacy boundaries
 
-- This adapter reference is included in an **unpublished test ZIP** and referenced conditionally from its Skill. Existing Claude manifest JSON files remain byte-identical, but the modified Skill and Free ZIP require independent qualification before any distribution. Do not silently edit the already-uploaded personal Skill or claim automatic upgrade.
-- Keep ChatGPT Library adapter unchanged; shared portable state contract is the only cross-host payload standard. No MCP server, external hosted database, connector permission grant, or paid service is required merely to write this adapter guidance.
-- Update EN/JA README with host-specific user operations and validated status **after** evidence. State only the bounded, observed Free/Claude capabilities; do not promise discovery in every session or future retention. If the original Doc lacks a literal `STATE_ID`, preserve the real `project_id` and `record_id` as distinct fields; never invent an equivalent `STATE_ID`. New snapshots should use consistent stable identity fields as supported by the portable state contract.
+This adapter ships as a reference file within AI Driver. It does not install an MCP server, external database, hook, or background sync service. Versioned state files may contain confidential project data and must not be uploaded to the public AI Driver repository. The blank `templates/state-template.md` is an example, not a live project record. Maintain distinct host-facing adapters rather than assuming Claude can access ChatGPT Library.
 
-## 10. Source and provenance
+## 10. Host documentation
 
-Existing: AI Driver installed `skill.md`, `references/requirements.md`, `references/conflict-rules.md`, `references/state-contract.md`, `references/chatgpt-library-adapter.md`, and Library `CURRENT v57` (which records the inconclusive transfer test).
+- [Claude Artifacts](https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them)
+- [Claude Projects](https://support.claude.com/en/articles/9517075-what-are-projects)
+- [Using Skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
 
-Official Anthropic sources reviewed 2026-10-20:
-- https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them (Artifacts available Free, Artifact **data storage** paid).
-- https://support.claude.com/en/articles/9517075-what-are-projects (Free Projects up to 5, project-scoped knowledge).
-- https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects (Knowledge must be added; conversation text not automatically inherited).
-- https://support.claude.com/en/articles/12512180-use-skills-in-claude (Free Skill use, code execution required).
-
-**Current outcome as of 2026-10-20:** a renamed nonpublic `ai-driver-adapter-test` was installed in Claude Free and reported Claude Doc creation/readback (W-01) and exact-ID retrieval from a distinct chat (W-02). The reports contain identity/revision and state checks; original host tool traces were not independently received. The installed parallel test Skill contains adapter v0.1; this v0.3 text is a **new distribution candidate only**, not yet uploaded or behaviorally qualified. In one user-reported Free session, title-only Artifacts-list discovery and complete Docs read succeeded. Public sharing status and broader availability remain unverified. Preserve public repo and directory submission state as NOT_EXECUTED.
+Availability depends on the actual user's plan, current session and enabled tools; documentation is not proof of access in a particular conversation.

@@ -8,33 +8,33 @@ AI Driverは、利用者が定めた目的・成功条件・決定事項・権�
 
 | 環境 | 導入方法 | 検証状況 |
 | --- | --- | --- |
-| Claude Code（ターミナル / VS Code） | 以下のMarketplace経由 | rc.3のMarketplace・Plugin定義に対するClaude Code公式検証2/2 PASS（利用者提供のWindows CLI結果）。以前のSkill版による架空の読取専用判断テストは利用者報告に基づき限定PASS |
+| Claude Code（ターミナル / VS Code） | 以下のMarketplace経由 | rc.3のMarketplace・Plugin定義に対するClaude Code公式検証2/2 PASS。GitHubインストール済みrc.3のSkillと参照資料の読込も利用者報告で確認済み。更新候補rc.4は公式検証前 |
 | **ClaudeのWebチャット（Freeを含む）** | **専用Skill ZIPをアップロード** | Anthropic公式がFreeのカスタムSkillに対応。**旧Web版のFreeでのアップロード・判断テストと、別名Adapterテスト版でのDoc保存・別チャット直接読込・タイトル検索は利用者報告に基づき限定PASS。今回のv0.3配布ZIPは未検証** |
 | GitHub Copilot / Gemini CLI | 将来の対応候補 | 未検証 |
 | ChatGPT / Codex | OpenAIのPlugin Directoryで別途配布 | このClaude版ZIPでは直接インストールしない |
 
 ## 1. Claude Codeでのインストール
 
-**GitHub公開後に** Claude Codeの入力欄で次を実行します（PowerShellではありません）。
+Claude Codeの入力欄で次を実行します（PowerShellではありません）。
 
 ```text
 /plugin marketplace add silentlybeyond/ai-driver
 /plugin install ai-driver@silentlybeyond-ai-driver
 ```
 
-必要と表示されたら `/reload-plugins` を実行します。明示起動は `/ai-driver:ai-driver`。自動選択は保証されません。GitHub公開前のローカル試験は、展開したリポジトリのルートで `claude --plugin-dir ./plugins/ai-driver` を実行してください。
+必要と表示されたら `/reload-plugins` を実行します。明示起動は `/ai-driver:ai-driver`。自動選択は保証されません。ローカル試験では、展開したリポジトリのルートで `claude --plugin-dir ./plugins/ai-driver` を実行してください。
 
 ## 2. Claude Web・Free版へのインストール
 
 Anthropic公式ヘルプでは、**Free / Pro / Max** で自分のカスタムSkillをアップロードできます。プラグイン用Marketplaceのインストールとは別の方法です。
 
-1. このリポジトリの [Claude Web用Skill ZIP](dist/ai-driver-claude-web-skill-v0.1.13-rc.3.zip) を取得します。**リポジトリ全体のZIPはSkillアップロードに使用しません。**
+1. このリポジトリの [Claude Web用Skill ZIP](dist/ai-driver-claude-web-skill-v0.1.13-rc.4.zip) を取得します。**リポジトリ全体のZIPはSkillアップロードに使用しません。**
 2. [Claude](https://claude.ai/new) で **Settings（設定）→ Capabilities（機能）** の **Code execution and file creation（コード実行とファイル作成）** を有効にします。
 3. **Customize（カスタマイズ）→ Skills → ＋ → Create skill → Upload a skill** を選びます（表示名が変更される場合があります）。
 4. 上記のSkill専用ZIPをアップロードし、**AI Driver** を有効化します。
 5. 新規チャットで下記の利用例を入力し、Skillが読み込まれたか確認します。自動選択されなければ、AI Driverを使うよう明示してください。
 
-専用ZIPは `ai-driver/SKILL.md` と必須参照資料・テンプレートなどを含みます。ClaudeのカスタムSkillガイドにある **description最大200文字** に合わせて起動用説明のみ短縮し、動作ルール本文・参照資料はClaude Code版と同一です。**旧版のFree導入は実機確認済みですが、このv0.3 ZIP自体の再アップロードと動作は未確認です。** Freeプラン固有の利用上限も適用されます。
+専用ZIPは `ai-driver/SKILL.md` と必須参照資料・テンプレートなどを含みます。ClaudeのカスタムSkillガイドにある **description最大200文字** に合わせて起動用説明のみ短縮し、動作ルール本文・参照資料はClaude Code版と同一です。**旧版のFree導入は実機確認済みですが、このrc.4 ZIP自体のアップロードと動作は未確認です。** Freeプラン固有の利用上限も適用されます。
 
 公式資料：[ClaudeでSkillを使用する](https://support.claude.com/ja/articles/12512180-claude%E3%81%A7%E3%82%B9%E3%82%AD%E3%83%AB%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B)、[カスタムSkillの作成方法](https://support.claude.com/ja/articles/12512198-%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%B9%E3%82%AD%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E6%96%B9%E6%B3%95)。
 
@@ -56,9 +56,9 @@ AI Driverは実際に許可された操作だけを行います。指示文を�
 
 ## 4. 新しいチャットへ移るときの引き継ぎ方
 
-### Claude保存Adapter（v0.3候補・既存テスト結果を反映）
+### Claude保存Adapter（配布用ガイド）
 
-Skillには、Claudeで保存・再開するときだけ読む `references/claude-adapter.md` を追加しました。通常チャットの非公開Artifacts / Claude Docs、同じProject内のチャットで利用するために**明示的に登録したProject Knowledge**、Claude Codeの非公開ローカル状態ファイルを区別します。**Claude Freeで別名のAdapterテストSkillがClaude Docを保存・読戻しし、別チャットでDoc ID指定とArtifacts一覧のタイトル検索から全文を復元したとの実機報告があります。ただし今回のv0.3配布ZIPの動作、Project Knowledgeの更新、検索機能が全セッションで利用できるか、Docの共有設定は未検証です。** 文書の作成だけで次チャットへの引継ぎは成立しません。使える機能と保存・読戻しを実際に確認し、できない場合は下記の完全ハンドオフ手順に戻ります。
+Skillには、Claudeで保存・再開するときだけ読む `references/claude-adapter.md` を追加しました。通常チャットの非公開Artifacts / Claude Docs、同じProject内のチャットで利用するために**明示的に登録したProject Knowledge**、Claude Codeの非公開ローカル状態ファイルを区別します。**Claude Freeで別名のAdapterテストSkillがClaude Docを保存・読戻しし、別チャットでDoc ID指定とArtifacts一覧のタイトル検索から全文を復元したとの実機報告があります。ただし今回のrc.4配布ZIPの動作、Project Knowledgeの更新、検索機能が全セッションで利用できるか、Docの共有設定は未検証です。** 文書の作成だけで次チャットへの引継ぎは成立しません。使える機能と保存・読戻しを実際に確認し、できない場合は下記の完全ハンドオフ手順に戻ります。
 
 
 
@@ -96,4 +96,4 @@ Claude Codeでは、アクセスが実際に認可された**非公開の状態�
 
 公開後の非機密のフィードバックはGitHub Issuesで受け付けます。秘密情報や個人の作業記録を投稿しないでください。
 
-**公開名義：** `silentlybeyond`（個人の活動名） ／ **ライセンス：** MIT (`LICENSE`)。候補版 `0.1.13-rc.3`。Anthropic審査・掲載は未実施です。
+**公開名義：** `silentlybeyond`（個人の活動名） ／ **ライセンス：** MIT (`LICENSE`)。候補版 `0.1.13-rc.4`。Anthropic審査・掲載は未実施です。
