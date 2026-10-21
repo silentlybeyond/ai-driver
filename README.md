@@ -11,13 +11,16 @@ AI Driver is an Agent Skill for pursuing a user-defined goal and success criteri
 | Claude Code (terminal/VS Code) | Install the GitHub marketplace plugin below | Official marketplace and plugin manifest validators 2/2 PASS on rc.3 (user-provided Windows CLI output); GitHub-installed rc.3 Skill and bundled references were read successfully (user-reported Claude Code run). Updated rc.4 has not yet been independently host-validated. |
 | Claude web chat, including Free | Upload the standalone Skill ZIP below | Anthropic documents custom Skill upload on Free; **Free custom Skill upload and read-only decision behavior passed in one user-reported account. A separate adapter-test Skill qualified Claude Doc creation, same-chat readback, direct-ID cross-chat retrieval and title-only Artifacts-list retrieval; the bundled v0.3 adapter package itself is not host-qualified.** |
 | GitHub Copilot / Gemini CLI | Planned integrations | **Not yet qualified** |
-| ChatGPT / Codex | [ChatGPT source and private-install ZIPs](chatgpt/ai-driver/README.md); Codex not independently qualified | PRIVATE plugin creation succeeded in one account; Skill ZIP upload, automatic activation and Codex remain unverified. Not an official OpenAI directory listing. |
+| ChatGPT (including Work) | [ChatGPT source, install ZIPs and evidence](chatgpt/ai-driver/README.md) | PRIVATE plugin import passed in one account; Work W-01–W-05 passed in **user-reported, bounded tests** on 2026-10-21: Skill reading, purpose/authority decisions, real local app implementation/testing, and cross-session recovery from a supplied filesystem location. Not independently reproduced by the maintainer; no automatic invocation/discovery established. |
+| Codex (separate qualification) | Not separately validated | NOT_ESTABLISHED; local tooling used by Work tests does not prove general Codex support. |
 
 Neither a validated manifest nor a ZIP alone proves consistent live behavior, universal storage access, automated invocation, security certification or marketplace endorsement.
 
 ## ChatGPT private self-install
 
 AI Driver's ChatGPT edition is now available as [auditable source](chatgpt/ai-driver/README.md) with [Japanese installation instructions](chatgpt/ai-driver/INSTALL.ja.md), plus separate [private-plugin ZIP](dist/ai-driver-chatgpt-plugin-v0.1.12-poc13.zip) and [personal-Skill ZIP](dist/ai-driver-chatgpt-skill-v0.1.12-poc13.zip). Use the dedicated ZIP, not the whole repository ZIP. These are **self-install packages where the account has the required permissions**; GitHub publication is not an OpenAI Plugin Directory listing. See the guides for qualified and unverified behavior.
+
+**ChatGPT Work evidence (2026-10-21):** In one user-reported private-plugin setup, W-04 built an isolated, dependency-free task app; 8 Node assertions and 12 Microsoft Edge headless browser assertions were reported PASS, including reload and restart persistence. W-05 reportedly opened a **new Work session**, read a saved handoff, source and JSON test evidence from a user-supplied filesystem location, and recovered completion conditions and Human-reserved publication authority. The initial test failure was retained rather than erased. This supports **file-based, locator-assisted continuity**, not automatic memory, automatic project discovery or independent re-execution. The maintainer has not independently read the private raw evidence in this review. See [scope and limitations](chatgpt/ai-driver/README.md#chatgpt-work-qualification-2026-10-21).
 
 ## Install in Claude Code (terminal or IDE)
 

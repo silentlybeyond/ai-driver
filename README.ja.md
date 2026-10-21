@@ -11,11 +11,14 @@ AI Driverは、利用者が定めた目的・成功条件・決定事項・権�
 | Claude Code（ターミナル / VS Code） | 以下のMarketplace経由 | rc.3のMarketplace・Plugin定義に対するClaude Code公式検証2/2 PASS。GitHubインストール済みrc.3のSkillと参照資料の読込も利用者報告で確認済み。更新候補rc.4は公式検証前 |
 | **ClaudeのWebチャット（Freeを含む）** | **専用Skill ZIPをアップロード** | Anthropic公式がFreeのカスタムSkillに対応。**旧Web版のFreeでのアップロード・判断テストと、別名Adapterテスト版でのDoc保存・別チャット直接読込・タイトル検索は利用者報告に基づき限定PASS。今回のv0.3配布ZIPは未検証** |
 | GitHub Copilot / Gemini CLI | 将来の対応候補 | 未検証 |
-| ChatGPT / Codex | [ChatGPT版ソース・非公開導入用ZIP](chatgpt/ai-driver/README.md)。Codexは個別検証が必要 | ChatGPTのPRIVATEプラグイン作成は1アカウントで成功。Skill単独ZIPの導入、自動選択、Codexは未検証。OpenAI公式Directory掲載ではありません。 |
+| ChatGPT（Workを含む） | [ChatGPT版ソース・導入用ZIP・検証範囲](chatgpt/ai-driver/README.md) | PRIVATEプラグイン作成PASS。WorkのW-01〜W-05でSkill読込・目的管理・実装とテスト・別セッションでのファイルからの状態復元が**利用者提出の実行報告に基づきPASS**（2026-10-21）。生ログの独立再実行、Skill自動起動・自動状態発見は未確立。 |
+| Codex（別途検証） | 個別の資格確認が必要 | NOT_ESTABLISHED。Work実行時のローカルツール利用だけではCodexの一般対応は証明できません。 |
 
 ## ChatGPT版の非公開導入
 
 ChatGPT専用の[ソースと案内](chatgpt/ai-driver/README.md)・[日本語導入ガイド](chatgpt/ai-driver/INSTALL.ja.md)を追加しました。対象アカウントで利用できる場合は、[非公開プラグイン用ZIP](dist/ai-driver-chatgpt-plugin-v0.1.12-poc13.zip)または[個人用Skill ZIP](dist/ai-driver-chatgpt-skill-v0.1.12-poc13.zip)を利用してください。**リポジトリ全体のZIPをインストール用として使わないでください。** GitHub公開はOpenAI公式Plugin Directoryへの掲載ではなく、アカウントによって導入機能が異なります。検証済み／未検証の範囲はガイドをご覧ください。
+
+**ChatGPT Workでの検証（2026-10-21）：** 利用者報告では、W-04で隔離領域にタスク管理アプリを実装し、Node単体8件、Microsoft Edge headlessのブラウザ試験12件がPASSしました。W-05では**新しいWorkセッション**が保存済みhandoff・ソース・証拠JSONを指定されたローカル保存場所から読み、目的・成功条件・Humanが保持する公開権限を復元しました。最初の試験失敗も履歴として保持されています。これは**保存場所を指定したファイルベースの継続性**の確認であり、自動記憶・自動発見・テストの独立再実行を意味しません。非公開の生証拠はこの公開リポジトリに含めていません。[検証の詳細と制限](chatgpt/ai-driver/README.md#chatgpt-work-qualification-2026-10-21)。
 
 ## 1. Claude Codeでのインストール
 
