@@ -12,7 +12,7 @@ AI Driverは、利用者が定めた目的・成功条件・決定事項・権�
 | **ClaudeのWebチャット（Freeを含む）** | **専用Skill ZIPをアップロード** | Anthropic公式がFreeのカスタムSkillに対応。**旧Web版のFreeでのアップロード・判断テストと、別名Adapterテスト版でのDoc保存・別チャット直接読込・タイトル検索は利用者報告に基づき限定PASS。今回のv0.3配布ZIPは未検証** |
 | GitHub Copilot / Gemini CLI | 将来の対応候補 | 未検証 |
 | ChatGPT（Workを含む） | [ChatGPT版ソース・導入用ZIP・検証範囲](chatgpt/ai-driver/README.md) | PRIVATEプラグイン作成PASS。WorkのW-01〜W-05でSkill読込・目的管理・実装とテスト・別セッションでのファイルからの状態復元が**利用者提出の実行報告に基づきPASS**（2026-10-21）。生ログの独立再実行、Skill自動起動・自動状態発見は未確立。 |
-| Codex（別途検証） | 個別の資格確認が必要 | NOT_ESTABLISHED。Work実行時のローカルツール利用だけではCodexの一般対応は証明できません。 |
+| Codex（Windows CLI） | [ワークスペース単位の導入ガイド](codex/INSTALL.ja.md) | **限定PASS（2026-10-21、ユーザー報告）**。ChatGPT版Skill v0.1.12-poc13を明示起動し、4資料読取・8件実行テスト・保存ハンドオフ・別セッション復元receiptまで報告済み。Windows生証拠の独立監査、自動起動、第三者環境の互換性は未確立。 |
 
 ## ChatGPT版の非公開導入
 
